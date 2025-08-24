@@ -60,6 +60,12 @@ export default function MedicationsScreen() {
           <Text style={styles.limitText}>
             {medications.length}/5 leków (wersja darmowa)
           </Text>
+          <TouchableOpacity 
+            style={styles.upgradeButton}
+            onPress={() => setShowSubscriptionModal(true)}
+          >
+            <Text style={styles.upgradeButtonText}>Przejdź na Premium</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>
@@ -128,14 +134,30 @@ const styles = StyleSheet.create({
   limitInfo: {
     backgroundColor: Colors.accent,
     paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingVertical: 8,
     borderRadius: 16,
     alignSelf: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    minWidth: 200,
   },
   limitText: {
     fontSize: 12,
     color: Colors.primary,
     fontWeight: '500',
+  },
+  upgradeButton: {
+    backgroundColor: Colors.primary,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    marginLeft: 8,
+  },
+  upgradeButtonText: {
+    fontSize: 10,
+    color: Colors.white,
+    fontWeight: '600',
   },
   emptyContainer: {
     alignItems: 'center',

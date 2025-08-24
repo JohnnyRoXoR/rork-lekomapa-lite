@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView } from 'react-native';
+import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/colors';
 import { useSubscriptionStore } from '@/store/subscriptionStore';
@@ -17,8 +18,13 @@ export function SubscriptionModal({ visible, onClose }: SubscriptionModalProps) 
   const t = translations[language];
 
   const handleStartTrial = () => {
-    startTrial();
     onClose();
+    router.push('/paywall');
+  };
+
+  const handleUpgrade = () => {
+    onClose();
+    router.push('/paywall');
   };
 
   const premiumFeatures = [

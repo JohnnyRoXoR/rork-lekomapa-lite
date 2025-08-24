@@ -7,9 +7,8 @@ import { useSettingsStore } from '@/store/settingsStore';
 import { useSubscriptionStore } from '@/store/subscriptionStore';
 import { useMedicationStore } from '@/store/medicationStore';
 import { translations } from '@/utils/i18n';
-import * as Print from 'expo-print';
-import * as Sharing from 'expo-sharing';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { generateMedicationsPdf, exportDataToJson, importDataFromJson } from '@/utils/pdf';
+import * as DocumentPicker from 'expo-document-picker';
 
 export default function SettingsScreen() {
   const {
@@ -37,36 +36,16 @@ export default function SettingsScreen() {
     }
 
     try {
-      const html = `
-        <html>
-          <head>
-            <style>
-              body { font-family: Arial, sans-serif; padding: 20px; }
-              h1 { color: #2E86AB; }
-              .medication { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
-              .medication-name { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
-              .medication-details { color: #666; }
-            </style>
-          </head>
-          <body>
-            <h1>Raport Leków - LekoMapa Lite</h1>
-            <p>Data wygenerowania: ${new Date().toLocaleDateString('pl-PL')}</p>
-            ${medications.map(med => `
-              <div class="medication">
-                <div class="medication-name">${med.name}</div>
-                <div class="medication-details">
-                  <p>Dawka: ${med.dosage}</p>
-                  <p>Godziny: ${med.times.join(', ')}</p>
-                  ${med.notes ? `<p>Notatki: ${med.notes}</p>` : ''}
-                </div>
-              </div>
-            `).join('')}
-          </body>
-        </html>
-      `;
-
-      const { uri } = await Print.printToFileAsync({ html });
-      await Sharing.shareAsync(uri);
+      const medicationsForReport = medications.map(med => ({
+        id: med.id,
+        name: med.name,
+        dosage: med.dosage,
+        times: med.times,
+        notes: med.notes
+      }));
+      
+      await generateMedicationsPdf(medicationsForReport, language === 'pl' ? 'pl-PL' : 'en-US');
+      Alert.alert(t.success, 'Raport PDF został wygenerowany');
     } catch (error) {
       Alert.alert(t.error, 'Nie udało się wygenerować raportu PDF');
     }
@@ -74,35 +53,46 @@ export default function SettingsScreen() {
 
   const handleExportData = async () => {
     try {
-      const data = {
-        medications,
-        settings: {
-          language,
-          quietHoursEnabled,
-          quietHoursStart,
-          quietHoursEnd
-        },
-        exportDate: new Date().toISOString()
-      };
-
-      const jsonString = JSON.stringify(data, null, 2);
-      const { uri } = await Print.printToFileAsync({
-        html: `<pre>${jsonString}</pre>`,
-        base64: false
-      });
-      
-      await Sharing.shareAsync(uri);
+      await exportDataToJson();
+      Alert.alert(t.success, 'Dane zostały wyeksportowane');
     } catch (error) {
       Alert.alert(t.error, 'Nie udało się wyeksportować danych');
     }
   };
 
-  const handleImportData = () => {
-    Alert.alert(
-      'Import danych',
-      'Funkcja importu będzie dostępna w przyszłych wersjach aplikacji.',
-      [{ text: 'OK' }]
-    );
+  const handleImportData = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: 'application/json',
+        copyToCacheDirectory: true
+      });
+
+      if (!result.canceled && result.assets[0]) {
+        const fileUri = result.assets[0].uri;
+        const fileContent = await fetch(fileUri).then(res => res.text());
+        
+        Alert.alert(
+          'Potwierdź import',
+          'Czy na pewno chcesz zaimportować dane? To zastąpi wszystkie obecne dane.',
+          [
+            { text: t.cancel, style: 'cancel' },
+            {
+              text: t.confirm,
+              onPress: async () => {
+                try {
+                  await importDataFromJson(fileContent);
+                  Alert.alert(t.success, 'Dane zostały zaimportowane. Uruchom aplikację ponownie.');
+                } catch (error) {
+                  Alert.alert(t.error, 'Nieprawidłowy format pliku lub błąd importu');
+                }
+              }
+            }
+          ]
+        );
+      }
+    } catch (error) {
+      Alert.alert(t.error, 'Nie udało się zaimportować danych');
+    }
   };
 
   const renderSettingItem = (

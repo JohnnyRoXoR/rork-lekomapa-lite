@@ -42,6 +42,30 @@ export const MOCK_PHARMACIES: PharmacyPrice[] = [
     distance: '0.8 km',
     address: 'ul. Nowy Świat 8, Warszawa',
     phone: '+48 22 555 44 33'
+  },
+  {
+    id: '4',
+    name: 'Apteka Zdrowie',
+    price: 10.99,
+    distance: '1.2 km',
+    address: 'ul. Piękna 25, Warszawa',
+    phone: '+48 22 444 55 66'
+  },
+  {
+    id: '5',
+    name: 'Apteka Vita',
+    price: 14.50,
+    distance: '1.5 km',
+    address: 'ul. Koszykowa 18, Warszawa',
+    phone: '+48 22 777 88 99'
+  },
+  {
+    id: '6',
+    name: 'Apteka Express',
+    price: 12.99,
+    distance: '2.1 km',
+    address: 'ul. Żurawia 32, Warszawa',
+    phone: '+48 22 333 22 11'
   }
 ];
 

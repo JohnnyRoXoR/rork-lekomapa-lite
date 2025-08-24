@@ -15,7 +15,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "app.rork.lekomapa-lite"
+      "bundleIdentifier": "app.rork.lekomapa-lite",
+      "usesIcloudStorage": true
     },
     "android": {
       "adaptiveIcon": {
@@ -25,7 +26,10 @@
       "package": "app.rork.lekomapa-lite",
       "permissions": [
         "android.permission.RECEIVE_BOOT_COMPLETED",
-        "android.permission.SCHEDULE_EXACT_ALARM"
+        "android.permission.SCHEDULE_EXACT_ALARM",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "INTERNET"
       ]
     },
     "web": {
@@ -48,6 +52,12 @@
             "./local/assets/notification_sound.wav"
           ],
           "enableBackgroundRemoteNotifications": false
+        }
+      ],
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
         }
       ]
     ],
