@@ -44,9 +44,19 @@ export const translations = {
     exportData: 'Eksportuj dane',
     importData: 'Importuj dane',
     privacyPolicy: 'Polityka prywatności',
+    privacyPolicyDesc: 'Przeczytaj naszą politykę prywatności',
     premium: 'Premium',
+    general: 'Ogólne',
+    dataManagement: 'Zarządzanie danymi',
+    about: 'Informacje',
+    aboutApp: 'O aplikacji',
+    disabled: 'Wyłączone',
+    exportToPDF: 'Eksport do PDF',
+    exportToPDFDesc: 'Wygeneruj raport przyjmowania leków',
+    importDataDesc: 'Importuj dane z pliku JSON',
+    version: 'Wersja',
     
-    // Subscription
+    // Subscription / Paywall
     upgradeToPremium: 'Przejdź na Premium',
     premiumFeatures: 'Funkcje Premium',
     unlimitedMeds: 'Nielimitowane leki',
@@ -56,6 +66,7 @@ export const translations = {
     cloudSync: 'Synchronizacja w chmurze',
     freeTrial: '7 dni za darmo',
     startTrial: 'Rozpocznij trial',
+    trialDescription: 'Wypróbuj wszystkie funkcje Premium przez 7 dni za darmo',
     
     // Common
     delete: 'Usuń',
@@ -115,9 +126,19 @@ export const translations = {
     exportData: 'Export Data',
     importData: 'Import Data',
     privacyPolicy: 'Privacy Policy',
+    privacyPolicyDesc: 'Read our privacy policy',
     premium: 'Premium',
+    general: 'General',
+    dataManagement: 'Data Management',
+    about: 'About',
+    aboutApp: 'About the app',
+    disabled: 'Disabled',
+    exportToPDF: 'Export to PDF',
+    exportToPDFDesc: 'Generate a medication intake report',
+    importDataDesc: 'Import data from JSON file',
+    version: 'Version',
     
-    // Subscription
+    // Subscription / Paywall
     upgradeToPremium: 'Upgrade to Premium',
     premiumFeatures: 'Premium Features',
     unlimitedMeds: 'Unlimited medications',
@@ -127,6 +148,7 @@ export const translations = {
     cloudSync: 'Cloud synchronization',
     freeTrial: '7 days free',
     startTrial: 'Start trial',
+    trialDescription: 'Try all Premium features free for 7 days',
     
     // Common
     delete: 'Delete',

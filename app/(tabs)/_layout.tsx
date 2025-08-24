@@ -4,10 +4,12 @@ import React from "react";
 import { Colors } from "@/constants/colors";
 import { useSettingsStore } from "@/store/settingsStore";
 import { translations } from "@/utils/i18n";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
   const { onboardingCompleted, language } = useSettingsStore();
   const t = translations[language];
+  const insets = useSafeAreaInsets();
 
   if (!onboardingCompleted) {
     return <Redirect href="/onboarding" />;
@@ -29,9 +31,9 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: Colors.white,
           borderTopColor: Colors.border,
-          paddingBottom: 8,
+          paddingBottom: insets.bottom,
           paddingTop: 8,
-          height: 88,
+          height: 60 + insets.bottom,
         },
         tabBarLabelStyle: {
           fontSize: 12,
